@@ -1,0 +1,6 @@
+# This would be the node modules being removed from your dependencies
+/node_modules
+
+# This would be to ignore all .env files
+.env
+

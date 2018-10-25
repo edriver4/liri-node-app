@@ -27,28 +27,32 @@ const searchBands = (artist) => {
     console.log('We made it to the search bands function ===>')
     console.log('Artist ====>', artist)
     const bandsURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-
     request(bandsURL, (error, response, body) => {
+        const jsonData = JSON.parse(body);
+        // console.log('response+++++', jsonData);
         console.log('response ===>', body.warn)
-        if (!error && response.statusCode === 200){
-           
-            if (body.warn === undefined) {
-                console.log(`No search results found for ${artist}`)
-                return
-            }
-            const jsonData = JSON.parse(body)
+        if (!error && response.statusCode === 200) {
+
+            // if (body.warn === undefined) {
+            //     console.log(`No search results found for ${artist}`)
+            //     return
+            // }
+            // const jsonData = JSON.parse(body)
             console.log(`Upcoming concerts for ${artist.toUpperCase()}: `)
-            for (let i = 0; i < jsonData.length; i++ ){
+            for (let i = 0; i < jsonData.length; i++) {
                 let concert = jsonData[i]
                 console.log('============================')
                 console.log(
-                    `${concert.venue.city},${concert.venue.region} at ${concert.venue.name} on ${moment(concert.venue.datetime).format('MM/DD/YYYY')}` 
+                    `${concert.venue.city},${concert.venue.region} at ${concert.venue.name} on ${moment(concert.venue.datetime).format('MM/DD/YYYY')}`
                 )
-        
+
+            }
+            if (body.warn === undefined) {
+                console.log(`No search results found for ${artist}`);
+                return;
             }
         }
     })
-
 }
 
 for (var i = 3; i < nodeArgs.length; i++) {
@@ -77,7 +81,7 @@ function runLiri(command, input) {
             searchFile();
             break;
         default:
-        return null
+            return null
             //findError(command, input);//
             break;
     }

@@ -17,12 +17,9 @@ const nodeArgs = process.argv;
 let input = '';
 let connector = "";
 
-// if (command === "concert-this") {
-//     connector = "+";
-// } else {
-//     connector = " ";
-// }
-
+// This is the searchBands Fucntion
+// This function returns an artist and the concert and the date that the artist plays
+// To use this code type in the terminal node liri.js concert-this "artist" but dont use the quotes.
 const searchBands = (artist) => {
     console.log('We made it to the search bands function ===>')
     console.log('Artist ====>', artist)
@@ -53,6 +50,11 @@ const searchBands = (artist) => {
             }
         }
     })
+}
+
+// Spotify function to search for songs
+const searchSpotify = (song) => {
+    console.log('We made it to search spotify function ===>');
 }
 
 for (var i = 3; i < nodeArgs.length; i++) {

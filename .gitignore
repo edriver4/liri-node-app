@@ -4,3 +4,8 @@
 # This would be to ignore all .env files
 .env
 
+#now try pushing and let's see if your node modules and your env shows up
+
+Shahein said that -A is less safe than .
+
+the main thing to test whether this worked or not was that node modules folder didn't show!

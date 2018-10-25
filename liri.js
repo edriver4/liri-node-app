@@ -6,8 +6,9 @@ require("dotenv").config();
 // External files.
 const request = require('request');
 const moment = require('moment');
-const keys = require("./keys.js");
+const keys = require("./keys");
 const fs = require("fs");
+const Spotify = require('node-spotify-api');
 
 // labeling the arguments in the input array.  These will serve as the commands for spotify, bands in town, and movies
 const command = process.argv[2];
@@ -23,7 +24,7 @@ let connector = "";
 const searchBands = (artist) => {
     console.log('We made it to the search bands function ===>')
     console.log('Artist ====>', artist)
-    const bandsURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=#";
+    const bandsURL = `https://rest.bandsintown.com/artists/${artist}/events?app_id=${keys.bands.apikey}`;
     request(bandsURL, (error, response, body) => {
         const jsonData = JSON.parse(body);
         // console.log('response+++++', jsonData);
@@ -61,31 +62,36 @@ const searchSpotify = (song) => {
     }
 
     // Install the Spotify npm package before running the spotify-this-song command.
-    var Spotify = require('node-spotify-api');
 
-    var spotify = new Spotify({
+    const spotify = new Spotify({
         id: keys.spotify.id,
         secret: keys.spotify.secret
     });
-console.log("New spotifiy===>", Spotify);
+    console.log("New spotifiy===>", spotify);
     spotify
-    .search({ type: 'track', query: 'All the Small Things'})
-    .then(function(response) {
-        console.log(response);
-    })
-    .catch(function(err){
-        console.log(err);
-    })
+        .search({ type: 'track', query: `${song}` })
+        .then(function (response) {
+            console.log(response);
+            console.log("-------------------Song Info Begining-----------------------------");
+            console.log(response.tracks.items[0].artists[0].name);
+            console.log(response.tracks.items[0].name);
+            console.log(response.tracks.items[0].preview_url);
+            console.log(response.tracks.items[0].album.name)
+            console.log("---------------------Song Info End----------------------------------");
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
 }
 
 // This function searches the OMDB for a movie's information.
 const searchMovies = (movie) => {
     console.log("We were able to run the searchMovies function ===>");
     console.log("Movie ===>", movie);
-    const queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=#"
+    const queryUrl = `http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=trilogy`;
     console.log(queryUrl);
-    request(queryUrl, function(error, response, body) {
-       const movieInformation = JSON.parse(body);
+    request(queryUrl, function (error, response, body) {
+        const movieInformation = JSON.parse(body);
         if (movie === "") {
             searchMovies("Thor");
         } else if (error != null) {
@@ -102,14 +108,7 @@ const searchMovies = (movie) => {
             console.log("Actors: " + movieInformation.Actors);
             console.log("-------------------------------------------Movie Info-----------------------------------------------------");
         }
-        // If the request is successful
-        // if (!error && response.statusCode === 200) {
-      
-        //   // Parse the body of the site and recover just the imdbRating
-        //   // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-        //   console.log("Release Year: " + JSON.parse(body).Year);
-        // }
-      });
+    });
 }
 
 for (var i = 3; i < nodeArgs.length; i++) {

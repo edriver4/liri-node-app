@@ -23,7 +23,7 @@ let connector = "";
 const searchBands = (artist) => {
     console.log('We made it to the search bands function ===>')
     console.log('Artist ====>', artist)
-    const bandsURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    const bandsURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=#";
     request(bandsURL, (error, response, body) => {
         const jsonData = JSON.parse(body);
         // console.log('response+++++', jsonData);
@@ -55,6 +55,61 @@ const searchBands = (artist) => {
 // Spotify function to search for songs
 const searchSpotify = (song) => {
     console.log('We made it to search spotify function ===>');
+
+    if (song === "") {
+        searchSpotify("Changes");
+    }
+
+    // Install the Spotify npm package before running the spotify-this-song command.
+    var Spotify = require('node-spotify-api');
+
+    var spotify = new Spotify({
+        id: keys.spotify.id,
+        secret: keys.spotify.secret
+    });
+console.log("New spotifiy===>", Spotify);
+    spotify
+    .search({ type: 'track', query: 'All the Small Things'})
+    .then(function(response) {
+        console.log(response);
+    })
+    .catch(function(err){
+        console.log(err);
+    })
+}
+
+// This function searches the OMDB for a movie's information.
+const searchMovies = (movie) => {
+    console.log("We were able to run the searchMovies function ===>");
+    console.log("Movie ===>", movie);
+    const queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=#"
+    console.log(queryUrl);
+    request(queryUrl, function(error, response, body) {
+       const movieInformation = JSON.parse(body);
+        if (movie === "") {
+            searchMovies("Thor");
+        } else if (error != null) {
+            console.log(error);
+        } else {
+            console.log("-------------------------------------------Movie Info-----------------------------------------------------");
+            console.log("Title: " + movieInformation.Title);
+            console.log("Year Released: " + movieInformation.Year);
+            console.log("IMDB Rating: " + movieInformation.Ratings[0].Value);
+            console.log("Rotten Tamatoes Rating: " + movieInformation.Ratings[1].Value);
+            console.log("Country produced: " + movieInformation.Country);
+            console.log("Language: " + movieInformation.Language);
+            console.log("Plot: " + movieInformation.Plot);
+            console.log("Actors: " + movieInformation.Actors);
+            console.log("-------------------------------------------Movie Info-----------------------------------------------------");
+        }
+        // If the request is successful
+        // if (!error && response.statusCode === 200) {
+      
+        //   // Parse the body of the site and recover just the imdbRating
+        //   // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+        //   console.log("Release Year: " + JSON.parse(body).Year);
+        // }
+      });
 }
 
 for (var i = 3; i < nodeArgs.length; i++) {

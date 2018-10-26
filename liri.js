@@ -88,7 +88,7 @@ const searchSpotify = (song) => {
 const searchMovies = (movie) => {
     console.log("We were able to run the searchMovies function ===>");
     console.log("Movie ===>", movie);
-    const queryUrl = `http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=trilogy`;
+    const queryUrl = `http://www.omdbapi.com/?t=${movie}&y=&plot=short&apikey=${keys.omdb.apikey}`;
     console.log(queryUrl);
     request(queryUrl, function (error, response, body) {
         const movieInformation = JSON.parse(body);

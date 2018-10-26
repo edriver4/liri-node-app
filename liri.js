@@ -119,13 +119,13 @@ function searchFile () {
     })
 }
 
-// for (var i = 3; i < nodeArgs.length; i++) {
-//     if (i > 3 && i < nodeArgs.length) {
-//         input = `${input}${connector}${nodeArgs[i]}`;
-//     } else {
-//         input += nodeArgs[i];
-//     }
-// }
+for (var i = 3; i < nodeArgs.length; i++) {
+    if (i > 3 && i < nodeArgs.length) {
+        input = `${input}${connector}${nodeArgs[i]}`;
+    } else {
+        input += nodeArgs[i];
+    }
+}
 
 runLiri(command, input);
 

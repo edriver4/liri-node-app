@@ -111,13 +111,21 @@ const searchMovies = (movie) => {
     });
 }
 
-for (var i = 3; i < nodeArgs.length; i++) {
-    if (i > 3 && i < nodeArgs.length) {
-        input = `${input}${connector}${nodeArgs[i]}`;
-    } else {
-        input += nodeArgs[i];
-    }
+function searchFile () {
+
+    fs.readFile("random.txt", "utf8", function(err, data){
+        const fileInformation = data.split(",");
+        runLiri(fileInformation[0], fileInformation[1]);
+    })
 }
+
+// for (var i = 3; i < nodeArgs.length; i++) {
+//     if (i > 3 && i < nodeArgs.length) {
+//         input = `${input}${connector}${nodeArgs[i]}`;
+//     } else {
+//         input += nodeArgs[i];
+//     }
+// }
 
 runLiri(command, input);
 

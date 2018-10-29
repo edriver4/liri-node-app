@@ -13,7 +13,7 @@ What this application does is that it allows you to do multiple commands that al
     b.) npm install ./keys
     c.) npm install fs
     d.) npm install node-spotify-api
-3.) Next you will now be able to search for your concerts, spotify, and Movies by using commands
+3.) Next you will now be able to search for your concerts, spotify, and Movies by using commands.
 4.) Whatever command you choose to use make sure you type this in the terminal first.  node liri.js [Command goes here]. (you don't need the brackets).
 
 ## Commands
